@@ -9,6 +9,7 @@
 #include <iostream>
 #include <sstream>
 using namespace std;
+using std::istream;
 
 Fraction::Fraction(){
     this->setFraction(1, 1);
@@ -98,3 +99,16 @@ Fraction &Fraction::operator=(const Fraction &f){
     this->setFraction(f.getNum(), f.getDen());
     return * this;
 }
+istream &operator >> (istream &input, Fraction &f){
+    cout << "Enter a numerator" << endl;
+    input >> f.num;
+    cout << "Enter a denominator" << endl;
+    input >> f.den;
+    return input;
+}
+
+std::ostream &operator<<(std::ostream &output, Fraction &f) {
+    output << f.num << "/" << f.den;
+    return output;
+}
+
