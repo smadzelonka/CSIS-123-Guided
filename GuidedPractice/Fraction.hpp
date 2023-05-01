@@ -15,8 +15,12 @@ using std::istream;
 using std::ostream;
 class Fraction
 { private:
-    int num; int den;
+    int *num; int *den;
+    static int count;
+    
 public:
+    void create();
+    ~Fraction();
     void setFraction (int n, int d);
     Fraction add(const Fraction &f);
     Fraction sub(const Fraction &f);
@@ -41,6 +45,9 @@ public:
     
     friend istream &operator >> (istream &input, Fraction &f);
     friend ostream &operator<<(ostream &output,  Fraction &f);
+    static int getCount() {
+        return count;
+    }
 };
 
 #endif /* Fraction_hpp */

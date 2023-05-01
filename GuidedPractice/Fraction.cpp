@@ -10,12 +10,20 @@
 #include <sstream>
 using namespace std;
 using std::istream;
+using std::ostream;
+
+
+int Fraction::count = 0; // definition of static member variable
 
 Fraction::Fraction(){
+    this->create();
     this->setFraction(1, 1);
+    count++; // increment counter
 };
 Fraction::Fraction(int num, int den){
+    this->create();
     this->setFraction(num, den);
+    count++; // increment counter
 };
 
 Fraction::Fraction(string input) {
@@ -26,24 +34,36 @@ Fraction::Fraction(string input) {
 };
 
 
+void Fraction::create(){
+    this->num = new int;
+    this->den = new int;
+};
+
+Fraction::~Fraction() {
+    delete this->num;
+    delete this->den;
+    count--; // decrement counter
+}
+
+
 void Fraction::setFraction(int n, int d)
 {
-    this->num = n;
-    this->den = d;
+    *this->num = n;
+    *this->den = d;
 }
 
 Fraction Fraction::add (const Fraction &f)
 {
     Fraction tmp;
-    tmp.num = (num * f.den) + (f.num * den) ;
-    tmp.den = f.den * den;
+    *tmp.num = (*this->num * *f.den) + (*f.num * *this->den) ;
+    *tmp.den = *f.den * *this->den;
     return tmp;
 }
 Fraction Fraction::sub(const Fraction &f)
 {
     Fraction tmp;
-    tmp.num = (this->num * f.den) - (f.num * f. den);
-    tmp. den = f.den * this->den;
+    *tmp.num = (*this->num * *f.den) - (*f.num * *f. den);
+    *tmp. den = *f.den * *this->den;
     return tmp;
 }
 
@@ -51,31 +71,31 @@ Fraction Fraction::sub(const Fraction &f)
 Fraction Fraction::multiply(const Fraction &f)
 {
     Fraction tmp;
-    tmp.num = num * f.num;
-    tmp.den = den * f.den;
+    *tmp.num = *this->num * *f.num;
+    *tmp.den = *this->den * *f.den;
     return tmp;
 }
 
 Fraction Fraction::divide(const Fraction &f)
 {
     Fraction tmp;
-    tmp.num = num * f.den;
-    tmp.den = den * f.num;
+    *tmp.num = *this->num * *f.den;
+    *tmp.den = *this->den * *f.num;
     return tmp;
 }
 
 void Fraction::printFraction()
 {
-    cout << num << "/" << den << endl;
+    cout << *num << "/" << *den << endl;
 }
 
 int Fraction::getDen() const
 {
-    return this->den;
+    return *this->den;
 }
 int Fraction::getNum() const
 {
-    return this->num;
+    return *this->num;
 }
 
 
@@ -101,14 +121,14 @@ Fraction &Fraction::operator=(const Fraction &f){
 }
 istream &operator >> (istream &input, Fraction &f){
     cout << "Enter a numerator" << endl;
-    input >> f.num;
+    input >> *f.num;
     cout << "Enter a denominator" << endl;
-    input >> f.den;
+    input >> *f.den;
     return input;
 }
 
-std::ostream &operator<<(std::ostream &output, Fraction &f) {
-    output << f.num << "/" << f.den;
+ostream &operator<<(ostream &output, Fraction &f) {
+    output << *f.num << "/" << *f.den;
     return output;
 }
 

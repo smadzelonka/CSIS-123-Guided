@@ -1,7 +1,7 @@
 //
 //  main.cpp
-//  GuidedPractice #4
-//  4/16/23.
+//  GuidedPractice #6
+//  4/21/23.
 //  Sean Madzelonka
 //  ID 0266099
 //
@@ -16,5 +16,6 @@ int main() {
     cout << "Fraction f1: " << f1 << endl;
     f3 = f1 + f2;
     f3.printFraction();
+    cout << "Number of instances of Fraction class: " << Fraction::getCount() << endl;
     return 0;
 }
